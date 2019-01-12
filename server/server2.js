@@ -1,18 +1,17 @@
 //Initiallising node modules
+// var bodyParser = require("body-parser");
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 // var express = require("express");
 // var path = require("path");
 // var sql = require("mssql");
-// var tedious = require("tedious");
-var express = require('express');
 var cors = require('cors');
+var express = require('express');
 var tediousExpress = require('express4-tedious');
-var bodyParser = require("body-parser");
-// var time = new Date().getUTCDate;
-
 var app = express();
+
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 
 var config =
 {
@@ -31,7 +30,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-//GET API both work
+//GET API
 
 app.get('/api/vehicles', function (req, res) {
 
@@ -40,32 +39,26 @@ app.get('/api/vehicles', function (req, res) {
 })
 
 app.get('/api/vehicles/:id', function (req, res) {
-    req.sql("select * from vehicles where id = @id for json path, without_array_wrapper")
+    req.sql("select * from Product where id = @id for json path, without_array_wrapper")
         .param('id', req.params.id, TYPES.Int)
-        .into(res, {});
+        .into(res, '{}');
  });
-//POST API works
-app.post("/api/books", function(req , res){
-    req.sql("INSERT INTO books (id,bookname,bookyear) VALUES ('2', 'Harry Potter','1997')")
-    // .param('id', req.params.id, TYPES.Int)
-    .into(res.sendStatus(201), res);
-    
+//POST API
+app.post("/api/user", function(req , res){
+    var query = "INSERT INTO [user] (Name,Email,Password) VALUES (req.body.Name,req.body.Email,req.body.Password)";
+    executeQuery (res, query);
 });
 
-//PUT API works
-app.put("/api/vehicles/:id", function(req , res){
-
-    req.sql("UPDATE vehicles SET ContactName = 'Vegeto' WHERE id = @id")
-    .param('id', req.params.id, TYPES.Int)
-    .into(res.sendStatus(200));
+//PUT API
+app.put("/api/user/:id", function(req , res){
+    var query = "UPDATE [user] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
+    executeQuery (res, query);
 });
 
-// DELETE API works
-app.delete("/api/vehicles/:id", function(req , res){
-    req.sql("DELETE FROM vehicles WHERE id = @id")
-    .param('id', req.params.id, TYPES.Int)
-    .into(res.sendStatus(204));
-
+// DELETE API
+app.delete("/api/user /:id", function(req , res){
+    var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
+    executeQuery (res, query);
 });
 
 
