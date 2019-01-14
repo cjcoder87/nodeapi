@@ -22,10 +22,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["src/app/vehicle.js"]
           },
           "configurations": {
             "production": {

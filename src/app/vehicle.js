@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-  <button type='button' onclick='getVehicles()'>Get vehicles!</button>
-<!-- show data -->
-<div id="vehicles"></div>
-<!-- <script>
 function getVehicles() {
     var xmlHttpRequest = new XMLHttpRequest();
   
@@ -20,7 +9,3 @@ function getVehicles() {
     xmlHttpRequest.open('GET', 'http://localhost:8080/api/vehicles', true);
     xmlHttpRequest.send();
   }
-</script> -->
-</body>
-<!-- <script src="node_getdata.js"></script> -->
-</html>

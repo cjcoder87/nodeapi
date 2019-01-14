@@ -35,9 +35,16 @@ app.use(function (req, res, next) {
 
 app.get('/api/vehicles', function (req, res) {
 
-    req.sql("select * from vehicles for json path")
+    req.sql("select * from vehicles for json path, without_array_wrapper")
     .into(res);
 })
+
+app.get('/api/scenarios', function (req, res) {
+
+    req.sql("select * from scenarios for json path, without_array_wrapper")
+    .into(res);
+})
+
 
 app.get('/api/vehicles/:id', function (req, res) {
     req.sql("select * from vehicles where id = @id for json path, without_array_wrapper")
