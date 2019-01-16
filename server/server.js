@@ -35,13 +35,13 @@ app.use(function (req, res, next) {
 
 app.get('/api/vehicles', function (req, res) {
 
-    req.sql("select * from vehicles for json path, without_array_wrapper")
+    req.sql("select * from vehicles for json path")
     .into(res);
 })
 
 app.get('/api/scenarios', function (req, res) {
 
-    req.sql("select * from scenarios for json path, without_array_wrapper")
+    req.sql("select * from scenarios for json path")
     .into(res);
 })
 
@@ -52,11 +52,25 @@ app.get('/api/vehicles/:id', function (req, res) {
         .into(res, {});
  });
 //POST API works
-app.post("/api/books", function(req , res){
-    req.sql("INSERT INTO books (id,bookname,bookyear) VALUES ('2', 'Harry Potter','1997')")
-    // .param('id', req.params.id, TYPES.Int)
-    .into(res.sendStatus(201), res);
+// app.post("/api/scenarios", function(req , res){
+//     req.sql("INSERT INTO scenarios (scenarioname,scenarioowner,scenariodate,scenarioversion,scenariostatus) VALUES (req.body.scenarioname, req.body.scenarioowner, req.body.scenariodate,req.body.scenarioversion,req.body.scenariostatus)")
+//     // .param('id', req.params.id, TYPES.Int)
+//     .into(res.sendStatus(201), res);
     
+// });
+app.post('/api/scenarios', (request, response) => {
+    const name = request.body.scenarioname;
+    const owner = request.body.scenarioowner;
+    const date = request.body.scenariodate;
+    const version = request.body.scenarioversion;
+    const status = request.body.scenariostatus;
+
+    console.log('at least I started the post function here');
+    console.log(request.body);
+    console.log(request.body.scenarioname);
+    request.sql("INSERT INTO scenarios (scenarioname,scenarioowner,scenariodate,scenarioversion,scenariostatus) VALUES ('" + name + "', '" + owner + "', '" + date + "', '" + version + "', '" + status + "')")
+ .into(response.sendStatus(201), response);
+ response.end();     
 });
 
 //PUT API works
